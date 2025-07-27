@@ -5,12 +5,15 @@ import axios from 'axios'
 export default class Search extends Component {
   search = () => {
     const { value: keyWord } = this.keyWord;
+    this.props.updateAppState({isFirst:false,isLoading:true})
   //  发ajax请求到本地3000端口服务器
     axios.get(`http://localhost:3000/api1/search/users?q=${keyWord}`).then(
       response=>{
-       this.props.saveUsers(response.data.items)
+        this.props.updateAppState({users:response.data.items,isLoading:false})
       },
-      error=>{console.log('请求失败',error)}
+      error=>{
+        this.props.updateAppState({isLoading:false,err:error.message})
+      }
     )
   }
   render() {

@@ -3,15 +3,20 @@ import Search from './components/Search'
 import List from './components/List'
 
 export default class App extends Component {
-  state = {users:[]}
-  saveUsers=(users)=>{
-    this.setState({users})
+  state = {users:[],
+    isFirst:true,
+    isLoading:false,
+    err:''
+  }
+  // 直接改成接受一个对象
+  updateAppState=(stateObj)=>{
+    this.setState(stateObj)
   }
   render() {
     return (
       <div className='container'>
-        <Search saveUsers={this.saveUsers}/>
-        <List users={this.state.users}/>
+        <Search updateAppState={this.updateAppState}/>
+        <List {...this.state}/>
       </div>
     )
   }

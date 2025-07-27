@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import './index.css'
 export default class List extends Component {
   render() {
+    const {isFirst,isLoading,err,users} = this.props
     return (
         <div className="row">
           {
-            (this.props.users||[]).map((userObj)=>{
+            isFirst?<h2>欢迎使用</h2>:
+            isLoading?<h2>Loading...</h2>:
+            err?<h2>{err}</h2>:
+            (users||[]).map((userObj)=>{
               return (
                   <div key={userObj.id} className="card">
                     <a href={userObj.html_url} target="_blank" rel="noreferrer">
