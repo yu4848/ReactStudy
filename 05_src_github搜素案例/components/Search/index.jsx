@@ -2,22 +2,17 @@
 
 import React, { Component } from 'react'
 import axios from 'axios'
-import PubSub from 'pubsub-js';
-
 export default class Search extends Component {
   search = () => {
     const { value: keyWord } = this.keyWord;
-    PubSub.publish('atguigu',{isFirst:false,isLoading:true})
-    // this.props.updateAppState({isFirst:false,isLoading:true})
+    this.props.updateAppState({isFirst:false,isLoading:true})
   //  发ajax请求到本地3000端口服务器
     axios.get(`http://localhost:3000/api1/search/users?q=${keyWord}`).then(
       response=>{
-        PubSub.publish('atguigu',{users:response.data.items,isLoading:false})
-        // this.props.updateAppState({users:response.data.items,isLoading:false})
+        this.props.updateAppState({users:response.data.items,isLoading:false})
       },
       error=>{
-        PubSub.publish('atguigu',{isLoading:false,err:error.message})
-        // this.props.updateAppState({isLoading:false,err:error.message})
+        this.props.updateAppState({isLoading:false,err:error.message})
       }
     )
   }
